@@ -54,10 +54,10 @@ function run() {
         }
         
         else {
-            connection.query("UPDATE products SET stock = ? WHERE id = ?",{
-                stock: ammount - parseInt(answer.amount),
-                id: answer.product
-            });
+            connection.query("UPDATE products SET stock = ? WHERE id = ?",[
+                ammount - parseInt(answer.amount),
+                answer.product
+            ]);
             console.log("Your purchase was successful.");
             start();
         }

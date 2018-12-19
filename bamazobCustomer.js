@@ -17,13 +17,21 @@ connection.connect(function(err){
 });
 
 function start() {
-    connection.query("SELECT * FROM songs", function(err, res) {
+    connection.query("SELECT * FROM products", function(err, res) {
         for (var i = 0; i < res.length; i++) {
-          console.log(res[i].id + " | " + res[i].title + " | " + res[i].artist + " | " + res[i].genre);
+          console.log(res[i].id + " | " + res[i].product_name + " | " + res[i].department + " | " + res[i].price + " | " + res[i].stock);
         }
         console.log("-----------------------------------");
+
+        run();
     });
 
+    
+
+    
+}
+
+function run() {
     inquirer.prompt([
         {
             name: "product",
@@ -46,8 +54,9 @@ function start() {
         }
         
         else {
-            connection.query("UPDATE products SET stock = ?",{
-                stock: ammount - answer.amount
+            connection.query("UPDATE products SET stock = ? WHERE id = ?",{
+                stock: ammount - parseInt(answer.amount),
+                id: answer.product
             });
             console.log("Your purchase was successful.");
             start();
